@@ -1,17 +1,17 @@
 
-import { useRouter } from 'next/router';
+
 import React from 'react';
 import NextLink from 'next/link'
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
-import data from '../../utils/data';
+
 import Layout from '../../components/Layout'
 import { Box,Button,Card,Grid,Link, List, ListItem, Typography } from '@mui/material';
 import classes from '../../utils/classes';
 import Image from 'next/image';
-export default function ProductScreen() {
-const router = useRouter()
-const {slug}=router.query;
-const product=data.products.find((a)=>a.slug===slug)
+import db from '../../utils/db';
+import Product from '../../models/Product'
+export default function ProductScreen(props) {
+const {product}=props
 if(!product){
     return <Box>Product not found</Box>
 }
@@ -75,3 +75,16 @@ if(!product){
 
   )
 }
+export async function getServerSideProps(context) {
+    const { params } = context;
+    const { slug } = params;
+ 
+    await db.connect();
+    const product = await Product.findOne({ slug }).lean();
+    await db.disconnect();
+    return {
+      props: {
+        product: db.convertDocToObj(product),
+      },
+    };
+  }
