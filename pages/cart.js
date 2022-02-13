@@ -30,17 +30,18 @@ function CartScreen() {
   const {
     cart: { cartItems },
   } = state;
-  const updateCartHanlder = async (item, quantity) => {
-    const { data } = await axios.get(`/api/products/${item._id}`);
-    if (data.countInStock <= 0) {
-      window.alert('Sorry. Product is out of stock');
-      return;
-    }
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
-  };
-  const removeItemHandler = (item) => {
-    dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
-  };
+ const updateCartHandler = async (item, quantity) => {
+     const { data } = await axios.get(`/api/products/${item._id}`);
+     if (data.countInStock < quantity) {
+       window.alert('Sorry. Product is out of stock');
+       return;
+     }
+     dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
+   };
+   const removeItemHandler = (item) => {
+     dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
+   };
+
   const checkouthandler = () => {
     router.push('/shipping');
   };
@@ -97,7 +98,7 @@ function CartScreen() {
                         <Select
                           value={item.quantity}
                           onChange={(e) =>
-                            updateCartHanlder(item, e.target.value)
+                            updateCartHandler(item, e.target.value)
                           }
                         >
                           {[...Array(item.countInStock).keys()].map((x) => (
