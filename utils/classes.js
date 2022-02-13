@@ -56,6 +56,7 @@ const classes = {
     grow: {
       flexGrow: 1,
     },
+    
     navbarButton: {
       color: '#ffffff',
       textTransform: 'initial',
