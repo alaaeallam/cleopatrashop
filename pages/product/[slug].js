@@ -1,20 +1,32 @@
 
 
-import React from 'react';
+import React, { useContext } from 'react';
 import NextLink from 'next/link'
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
-
+import axios from 'axios';
 import Layout from '../../components/Layout'
 import { Box,Button,Card,Grid,Link, List, ListItem, Typography } from '@mui/material';
+
 import classes from '../../utils/classes';
 import Image from 'next/image';
 import db from '../../utils/db';
 import Product from '../../models/Product'
+import { Store } from '../../utils/Store';
 export default function ProductScreen(props) {
+  
+    const {dispatch}=useContext(Store)
 const {product}=props
 if(!product){
     return <Box>Product not found</Box>
 }
+const addToCartHandler = async () => {
+    const { data } = await axios.get(`/api/products/${product._id}`);
+    if (data.countInStock <= 0) {
+      window.alert('Sorry. Product is out of stock');
+      return;
+    }
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity: 1 } });
+  };
   return (
      <Layout title={product.name} description={product.description}>
          <Box sx={classes.section}>
@@ -65,7 +77,7 @@ if(!product){
                              </Grid>
                          </ListItem>
                          <ListItem>
-                             <Button fullWidth variant='contained' color='primary'>Add to Cart</Button>
+                             <Button fullWidth variant='contained' color="primary" onClick={addToCartHandler}>Add to Cart</Button>
                          </ListItem>
                      </List>
                  </Card>
@@ -86,5 +98,5 @@ export async function getServerSideProps(context) {
       props: {
         product: db.convertDocToObj(product),
       },
-    };
-  }
+    }
+}

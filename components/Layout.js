@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Head from 'next/head'
-import { AppBar,Container,Link,Toolbar, Typography,Switch } from '@mui/material';
+import { AppBar,Container,Link,Toolbar, Typography,Switch,Badge} from '@mui/material';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import NextLink from 'next/link'
@@ -11,7 +11,7 @@ import { Store } from '../utils/Store';
 import Cookies from 'js-cookie';
 export default function Layout({title,description,children}) {
   const {state,dispatch}=useContext(Store)
-  const {darkMode}=state
+  const {darkMode,cart}=state
     const theme = createTheme({
         typography: {
           h1: {
@@ -65,7 +65,17 @@ export default function Layout({title,description,children}) {
               ></Switch>
             <NextLink href={'/cart'} passHref>
                 <Link>
-                <ShoppingCartOutlinedIcon></ShoppingCartOutlinedIcon>
+                {cart.cartItems.length > 0 ? (
+                    <Badge
+                      color="secondary"
+                      badgeContent={cart.cartItems.length}
+                    >
+                    <ShoppingCartOutlinedIcon></ShoppingCartOutlinedIcon>
+                    </Badge>
+                  ) : (
+                    <ShoppingCartOutlinedIcon></ShoppingCartOutlinedIcon>
+                  )}
+                
                 </Link>
             </NextLink>
             <NextLink href={'/login'} passHref>
