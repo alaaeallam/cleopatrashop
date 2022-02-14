@@ -124,7 +124,7 @@ function AdminDashboard() {
                       <Card raised>
                         <CardContent>
                           <Typography variant="h1">
-                            LE {summary.ordersPrice}
+                            {summary.ordersPrice} EGP
                           </Typography>
                           <Typography>Sales</Typography>
                         </CardContent>
