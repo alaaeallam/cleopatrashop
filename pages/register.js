@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import React, { useContext, useEffect } from 'react';
 import NextLink from 'next/link';
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import { Store } from '../utils/Store';
 import axios from 'axios';
 import { useRouter } from 'next/router';
