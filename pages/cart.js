@@ -1,13 +1,13 @@
 import dynamic from 'next/dynamic';
 import {
   Grid,
-  Table,
-  TableBody,
-  TableCell,
   TableContainer,
-  TableHead,
-  TableRow,
+  Table,
   Typography,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
   Link,
   Select,
   MenuItem,
@@ -15,49 +15,46 @@ import {
   Card,
   List,
   ListItem,
-} from '@mui/material'
-
+  Box,
+} from '@mui/material';
 import React, { useContext } from 'react';
-import { Store } from '../utils/Store';
-import Layout from '../components/Layout';
 import NextLink from 'next/link';
+import Layout from '../components/Layout';
+import { Store } from '../utils/Store';
 import Image from 'next/image';
 import axios from 'axios';
-import useRouter from 'next/router';
+import { useRouter } from 'next/router';
 function CartScreen() {
-  const router = useRouter;
+  const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const {
     cart: { cartItems },
   } = state;
- const updateCartHandler = async (item, quantity) => {
-     const { data } = await axios.get(`/api/products/${item._id}`);
-     if (data.countInStock < quantity) {
-       window.alert('Sorry. Product is out of stock');
-       return;
-     }
-     dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
-   };
-   const removeItemHandler = (item) => {
-     dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
-   };
-
+  const updateCartHanlder = async (item, quantity) => {
+    const { data } = await axios.get(`/api/products/${item._id}`);
+    if (data.countInStock < quantity) {
+      window.alert('Sorry Product is out of stock');
+    }
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
+  };
+  const removeItemHandler = (item) => {
+    dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
+  };
   const checkouthandler = () => {
     router.push('/shipping');
   };
   return (
-    <Layout title="Shopping Cart">
+    <Layout title="Shpping Cart">
       <Typography component="h1" variant="h1">
         Shopping Cart
       </Typography>
       {cartItems.length === 0 ? (
-        <div>
-          Cart is empty. <NextLink href="/">Go shopping</NextLink>
+        <Box>
           Cart is empty.{' '}
           <NextLink href="/" passHref>
             <Link>Go shopping</Link>
           </NextLink>
-        </div>
+        </Box>
       ) : (
         <Grid container spacing={1}>
           <Grid item md={9} xs={12}>
@@ -98,7 +95,7 @@ function CartScreen() {
                         <Select
                           value={item.quantity}
                           onChange={(e) =>
-                            updateCartHandler(item, e.target.value)
+                            updateCartHanlder(item, e.target.value)
                           }
                         >
                           {[...Array(item.countInStock).keys()].map((x) => (
@@ -108,7 +105,7 @@ function CartScreen() {
                           ))}
                         </Select>
                       </TableCell>
-                      <TableCell align="right">{item.price}EGP</TableCell>
+                      <TableCell align="right">LE {item.price}</TableCell>
                       <TableCell align="right">
                         <Button
                           variant="contained"
@@ -124,15 +121,15 @@ function CartScreen() {
               </Table>
             </TableContainer>
           </Grid>
-          <Grid md={3} xs={12}>
+          <Grid item md={3} xs={12}>
             <Card>
               <List>
                 <ListItem>
                   <Typography variant="h2">
                     Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
                     {'  '}
-                    items):
-                    {cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}{' '} EGP
+                    items): LE{' '}
+                    {cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}
                   </Typography>
                 </ListItem>
                 <ListItem>

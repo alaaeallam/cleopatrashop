@@ -1,6 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext,useState } from 'react';
 import Head from 'next/head'
-import { AppBar,Container,Link,Toolbar, Typography,Badge} from '@mui/material';
+import {  AppBar,
+  Toolbar,
+  Typography,
+  Container,
+  Link,
+  Badge,
+  Button,
+  Menu,
+  MenuItem} from '@mui/material';
+  import { useRouter } from 'next/router';
+  import Cookies from 'js-cookie';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import NextLink from 'next/link'
@@ -10,8 +20,9 @@ import classes from '../utils/classes';
 import { Store } from '../utils/Store';
 
 export default function Layout({title,description,children}) {
-  const {state}=useContext(Store)
-  const {cart}=state
+  const router = useRouter();
+  const {state,dispatch}=useContext(Store)
+  const {cart,userInfo}=state
     const theme = createTheme({
         typography: {
           h1: {
@@ -38,7 +49,24 @@ export default function Layout({title,description,children}) {
           },
         },
       });
-
+      const [anchorEl, setAnchorEl] = useState(null);
+      const loginClickHandler = (e) => {
+        setAnchorEl(e.currentTarget);
+      };
+      const loginMenuCloseHandler = (e, redirect) => {
+        setAnchorEl(null);
+        if (redirect) {
+          router.push(redirect);
+        }
+      };
+      const logoutClickHandler = () => {
+        setAnchorEl(null);
+        dispatch({ type: 'USER_LOGOUT' });
+        Cookies.remove('userInfo');
+        Cookies.remove('cartItems');
+    
+        router.push('/');
+      };
   return (
       <div> <Head>
       <title>{title?`${title}-Cleopatra Shop`:'Cleopatra Shop'}</title>
@@ -70,11 +98,55 @@ export default function Layout({title,description,children}) {
                 
                 </Link>
             </NextLink>
+            {userInfo ? (
+                <>
+                  <Button
+                    aria-controls="simple-menu"
+                    aria-haspopup="true"
+                    onClick={loginClickHandler}
+                    sx={classes.navbarButton}
+                  >
+                    {userInfo.name}
+                  </Button>
+                  <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={loginMenuCloseHandler}
+                  >
+                    <MenuItem
+                      onClick={(e) => loginMenuCloseHandler(e, '/profile')}
+                    >
+                      Profile
+                    </MenuItem>
+                    <MenuItem
+                      onClick={(e) =>
+                        loginMenuCloseHandler(e, '/order-history')
+                      }
+                    >
+                      Order History
+                    </MenuItem>
+
+                    {userInfo.isAdmin && (
+                      <MenuItem
+                        onClick={(e) =>
+                          loginMenuCloseHandler(e, '/admin/dashboard')
+                        }
+                      >
+                        Admin Dashboard
+                      </MenuItem>
+                    )}
+                    <MenuItem onClick={logoutClickHandler}>Logout</MenuItem>
+                  </Menu>
+                </>
+              ) : (
             <NextLink href={'/login'} passHref>
                 <Link>
                 <PersonOutlinedIcon></PersonOutlinedIcon>
                 </Link>
             </NextLink>
+             )}
         </div>
       </Toolbar>
   </AppBar>
