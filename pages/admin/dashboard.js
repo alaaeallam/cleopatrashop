@@ -3,8 +3,16 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import NextLink from 'next/link';
 import React, { useEffect, useContext, useReducer } from 'react';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS } from 'chart.js/auto'
 import {
   CircularProgress,
   Grid,
@@ -65,6 +73,14 @@ function AdminDashboard() {
     };
     fetchData();
   }, []);
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
+  );
   return (
     <Layout title="Admin Dashboard">
       <Grid container spacing={1}>
@@ -181,6 +197,7 @@ function AdminDashboard() {
                 </Typography>
               </ListItem>
               <ListItem>
+              
                 <Bar
                   data={{
                     labels: summary.salesData.map((x) => x._id),
