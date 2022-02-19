@@ -15,6 +15,7 @@ export default function Shipping() {
     control,
     formState: { errors },
     setValue,
+    getValues,
   } = useForm();
 
   const router = useRouter();
@@ -24,6 +25,7 @@ export default function Shipping() {
     userInfo,
     cart: { shippingAddress },
   } = state;
+  const { location } = shippingAddress;
   useEffect(() => {
     if (!userInfo) {
       router.push('/login?redirect=/shipping');
@@ -37,13 +39,33 @@ export default function Shipping() {
   const submitHandler = ({ fullName, address, mobile, city }) => {
     dispatch({
       type: 'SAVE_SHIPPING_ADDRESS',
-      payload: { fullName, address, city, mobile },
+      payload: { fullName, address, city, mobile,location },
     });
     Cookies.set(
       'shippingAddress',
-      JSON.stringify({ fullName, address, city, mobile })
+      JSON.stringify({ fullName, address, city, mobile,location })
     );
     router.push('/payment');
+  };
+  const chooseLocationHandler = () => {
+    const fullName = getValues('fullName');
+    const address = getValues('address');
+    const city = getValues('city');
+    const mobile = getValues('mobile');
+
+    dispatch({
+      type: 'SAVE_SHIPPING_ADDRESS',
+      payload: { fullName, address, city, mobile  },
+    });
+    Cookies.set('shippingAddress', 
+    JSON.stringify({
+      fullName,
+      address,
+      city,
+      mobile,
+      location,
+    }));
+    router.push('/map');
   };
   return (
     <Layout title={'Shipping Address'}>
@@ -165,6 +187,18 @@ export default function Shipping() {
               )}
             ></Controller>
           </ListItem>
+          <ListItem>
+             <Button
+               variant="contained"
+               type="button"
+               onClick={chooseLocationHandler}
+             >
+               Choose on map
+             </Button>
+             <Typography>
+               {location.lat && `${location.lat}, ${location.lat}`}
+             </Typography>
+           </ListItem>
           <ListItem>
             <Button variant="contained" type="submit" fullWidth color="primary">
               Continue

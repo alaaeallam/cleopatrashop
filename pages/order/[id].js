@@ -166,6 +166,16 @@ function Order({ params }) {
                   {shippingAddress.city}
                   <br /> {shippingAddress.mobile}
                   <br />
+                  &nbsp;
+                   {shippingAddress.location && (
+                     <Link
+                       variant="button"
+                       target="_new"
+                       href={`https://maps.google.com?q=${shippingAddress.location.lat},${shippingAddress.location.lng}`}
+                     >
+                       Show On Map
+                     </Link>
+                   )}
                 </ListItem>
               </List>
             </Card>

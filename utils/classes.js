@@ -46,6 +46,7 @@ const classes = {
         marginLeft: 1,
       },
     },
+
     toolbar: {
       justifyContent: 'space-between',
     },
@@ -66,6 +67,7 @@ const classes = {
   
     // search
   
+    
     searchForm: {
       border: '1px solid #ffffff',
       backgroundColor: '#ffffff',
@@ -87,13 +89,12 @@ const classes = {
       },
     },
   
-    // review
+
     reviewItem: {
       marginRight: '1rem',
       borderRight: '1px #808080 solid',
       paddingRight: '1rem',
     },
-  
     // map
     mapInputBox: {
       position: 'absolute',
