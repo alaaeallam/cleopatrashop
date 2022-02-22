@@ -233,7 +233,7 @@ function Order({ params }) {
                               <Typography>{item.quantity}</Typography>
                             </TableCell>
                             <TableCell align="right">
-                              <Typography>{item.price}LE</Typography>
+                              <Typography>EGP{item.price}</Typography>
                             </TableCell>
                           </TableRow>
                         ))}
@@ -263,7 +263,7 @@ function Order({ params }) {
                     <Typography>Tax:</Typography>
                   </Grid>
                   <Grid item xs={6}>
-                    <Typography align="right">LE {taxPrice}</Typography>
+                    <Typography align="right">EGP{taxPrice}</Typography>
                   </Grid>
                 </Grid>
                 <Grid container>

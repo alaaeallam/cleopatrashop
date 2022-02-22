@@ -206,7 +206,7 @@ function AdminProdcuts() {
                               {product._id.substring(20, 24)}
                             </TableCell>
                             <TableCell>{product.name}</TableCell>
-                            <TableCell>{product.price} LE</TableCell>
+                            <TableCell>EGP {product.price}</TableCell>
                             <TableCell>{product.category}</TableCell>
                             <TableCell>{product.countInStock}</TableCell>
                             <TableCell>{product.rating}</TableCell>

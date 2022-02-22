@@ -160,7 +160,7 @@ function PlaceOrder() {
                             <Typography>{item.quantity}</Typography>
                           </TableCell>
                           <TableCell align="right">
-                            <Typography>LE {item.price}</Typography>
+                            <Typography>EGP {item.price}</Typography>
                           </TableCell>
                         </TableRow>
                       ))}
@@ -190,7 +190,7 @@ function PlaceOrder() {
                   <Typography>Tax:</Typography>
                 </Grid>
                 <Grid item xs={6}>
-                  <Typography align="right">LE {taxPrice}</Typography>
+                  <Typography align="right">EGP {taxPrice}</Typography>
                 </Grid>
               </Grid>
               <Grid container>

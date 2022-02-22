@@ -128,7 +128,7 @@ function CartScreen() {
                   <Typography variant="h2">
                     Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
                     {'  '}
-                    items): LE{' '}
+                    items): EGP{' '}
                     {cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}
                   </Typography>
                 </ListItem>
