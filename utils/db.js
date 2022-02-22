@@ -13,7 +13,7 @@ async function connect() {
       console.log('use previous connection');
       return;
     }
-    await mongoose.disconnect();
+  //  await mongoose.disconnect();
   }
   const db = await mongoose.connect(process.env.MONGODB_URI, {});
   console.log('new connection');
@@ -23,7 +23,7 @@ async function connect() {
 async function disconnect() {
   if (connection.isConnected) {
     if (process.env.NODE_ENV === 'production') {
-      await mongoose.disconnect();
+    //  await mongoose.disconnect();
       connection.isConnected = false;
     } else {
       console.log('not disconnected');
