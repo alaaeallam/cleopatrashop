@@ -92,6 +92,7 @@ function ProductEdit({ params }) {
            setIsFeatured(data.isFeatured);
           setValue('category', data.category);
           setValue('brand', data.brand);
+          setValue('size', data.size);
           setValue('countInStock', data.countInStock);
           setValue('description', data.description);
         } catch (err) {
@@ -130,6 +131,7 @@ function ProductEdit({ params }) {
     image,
     featuredImage,
     brand,
+    size,
     countInStock,
     description,
   }) => {
@@ -147,6 +149,7 @@ function ProductEdit({ params }) {
           isFeatured,
           featuredImage,
           brand,
+          size,
           countInStock,
           description,
         },
@@ -382,6 +385,27 @@ function ProductEdit({ params }) {
                             label="Brand"
                             error={Boolean(errors.brand)}
                             helperText={errors.brand ? 'Brand is required' : ''}
+                            {...field}
+                          ></TextField>
+                        )}
+                      ></Controller>
+                    </ListItem>
+                    <ListItem>
+                      <Controller
+                        name="size"
+                        control={control}
+                        defaultValue=""
+                        rules={{
+                          required: true,
+                        }}
+                        render={({ field }) => (
+                          <TextField
+                            variant="outlined"
+                            fullWidth
+                            id="size"
+                            label="Size"
+                            error={Boolean(errors.size)}
+                            helperText={errors.size ? 'Size is required' : ''}
                             {...field}
                           ></TextField>
                         )}

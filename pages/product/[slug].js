@@ -121,6 +121,9 @@ export default function ProductScreen(props) {
               <Typography>Brand: {product.brand}</Typography>
             </ListItem>
             <ListItem>
+              <Typography>Size: {product.size}</Typography>
+            </ListItem>
+            <ListItem>
               <Rating value={product.rating} readOnly></Rating>
               <Link href="#reviews">
                 <Typography>({product.numReviews} reviews)</Typography>

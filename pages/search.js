@@ -47,16 +47,18 @@ export default function Search(props) {
     query = 'all',
     category = 'all',
     brand = 'all',
+    size = 'all',
     price = 'all',
     rating = 'all',
     sort = 'featured',
   } = router.query;
-  const { products, countProducts, categories, brands, pages } = props;
+  const { products, countProducts, categories, brands, pages ,sizes } = props;
 
   const filterSearch = ({
     page,
     category,
     brand,
+    size,
     sort,
     min,
     max,
@@ -71,6 +73,7 @@ export default function Search(props) {
     if (sort) query.sort = sort;
     if (category) query.category = category;
     if (brand) query.brand = brand;
+    if (size) query.size = size;
     if (price) query.price = price;
     if (rating) query.rating = rating;
     if (min) query.min ? query.min : query.min === 0 ? 0 : min;
@@ -89,6 +92,9 @@ export default function Search(props) {
   };
   const brandHandler = (e) => {
     filterSearch({ brand: e.target.value });
+  };
+  const sizeHandler = (e) => {
+    filterSearch({ size: e.target.value });
   };
   const sortHandler = (e) => {
     filterSearch({ sort: e.target.value });
@@ -147,6 +153,20 @@ export default function Search(props) {
             </ListItem>
             <ListItem>
               <Box sx={classes.fullWidth}>
+                <Typography>Size</Typography>
+                <Select value={size} onChange={sizeHandler} fullWidth>
+                  <MenuItem value="all">All</MenuItem>
+                  {sizes &&
+                    sizes.map((size) => (
+                      <MenuItem key={size} value={size}>
+                        {size}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </Box>
+            </ListItem>
+            <ListItem>
+              <Box sx={classes.fullWidth}>
                 <Typography>Prices</Typography>
                 <Select value={price} onChange={priceHandler} fullWidth>
                   <MenuItem value="all">All</MenuItem>
@@ -181,11 +201,13 @@ export default function Search(props) {
               {query !== 'all' && query !== '' && ' : ' + query}
               {category !== 'all' && ' : ' + category}
               {brand !== 'all' && ' : ' + brand}
+              {size !== 'all' && ' : ' + size}
               {price !== 'all' && ' : Price ' + price}
               {rating !== 'all' && ' : Rating ' + rating + ' & up'}
               {(query !== 'all' && query !== '') ||
               category !== 'all' ||
               brand !== 'all' ||
+              size !== 'all' ||
               rating !== 'all' ||
               price !== 'all' ? (
                 <Button onClick={() => router.push('/search')}>
@@ -234,6 +256,7 @@ export async function getServerSideProps({ query }) {
   const page = query.page || 1;
   const category = query.category || '';
   const brand = query.brand || '';
+  const size = query.size || '';
   const price = query.price || '';
   const rating = query.rating || '';
   const sort = query.sort || '';
@@ -250,6 +273,7 @@ export async function getServerSideProps({ query }) {
       : {};
   const categoryFilter = category && category !== 'all' ? { category } : {};
   const brandFilter = brand && brand !== 'all' ? { brand } : {};
+  const sizeFilter = size && size !== 'all' ? { size } : {};
   const ratingFilter =
     rating && rating !== 'all'
       ? {
@@ -284,12 +308,14 @@ export async function getServerSideProps({ query }) {
 
   const categories = await Product.find().distinct('category');
   const brands = await Product.find().distinct('brand');
+  const sizes = await Product.find().distinct('size');
   const productDocs = await Product.find(
     {
       ...queryFilter,
       ...categoryFilter,
       ...priceFilter,
       ...brandFilter,
+      ...sizeFilter,
       ...ratingFilter,
     },
     '-reviews'
@@ -318,6 +344,8 @@ export async function getServerSideProps({ query }) {
       pages: Math.ceil(countProducts / pageSize),
       categories,
       brands,
+      sizes,
+
     },
   };
 }
