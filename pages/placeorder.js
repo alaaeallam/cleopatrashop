@@ -38,7 +38,7 @@ function PlaceOrder() {
   const itemsPrice = round2(
     cartItems.reduce((a, c) => a + c.price * c.quantity, 0)
   );
-  const shippingPrice = itemsPrice > 400 ? 0 : 15;
+  const shippingPrice = itemsPrice > 1000 ? 0 : 30;
   const taxPrice = round2(itemsPrice * 0.15);
   const totalPrice = round2(itemsPrice + shippingPrice);
   useEffect(() => {
@@ -182,15 +182,15 @@ function PlaceOrder() {
                   <Typography>Items:</Typography>
                 </Grid>
                 <Grid item xs={6}>
-                  <Typography align="right">LE {itemsPrice}</Typography>
+                  <Typography align="right">{itemsPrice}EGP</Typography>
                 </Grid>
               </Grid>
               <Grid container>
                 <Grid item xs={6}>
-                  <Typography>Shipping:</Typography>
+                  <Typography>Delivery:</Typography>
                 </Grid>
                 <Grid item xs={6}>
-                  <Typography align="right">LE {shippingPrice}</Typography>
+                  <Typography align="right">{shippingPrice}EGP</Typography>
                 </Grid>
               </Grid>
               <Grid container>
