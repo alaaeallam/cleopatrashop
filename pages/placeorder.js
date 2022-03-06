@@ -40,7 +40,7 @@ function PlaceOrder() {
   );
   const shippingPrice = itemsPrice > 400 ? 0 : 15;
   const taxPrice = round2(itemsPrice * 0.15);
-  const totalPrice = round2(itemsPrice + shippingPrice + taxPrice);
+  const totalPrice = round2(itemsPrice + shippingPrice);
   useEffect(() => {
     if (!paymentMethod) {
       router.push('/payment');
@@ -183,14 +183,6 @@ function PlaceOrder() {
                 </Grid>
                 <Grid item xs={6}>
                   <Typography align="right">LE {itemsPrice}</Typography>
-                </Grid>
-              </Grid>
-              <Grid container>
-                <Grid item xs={6}>
-                  <Typography>Tax:</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography align="right">EGP {taxPrice}</Typography>
                 </Grid>
               </Grid>
               <Grid container>

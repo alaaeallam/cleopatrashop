@@ -89,7 +89,7 @@ function ProductEdit({ params }) {
           setValue('price', data.price);
           setValue('image', data.image);
           setValue('featuredImage', data.featuredImage);
-           setIsFeatured(data.isFeatured);
+          setIsFeatured(data.isFeatured);
           setValue('category', data.category);
           setValue('brand', data.brand);
           setValue('size', data.size);
