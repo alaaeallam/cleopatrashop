@@ -13,7 +13,7 @@ import {
   CircularProgress,
   Box,
 } from '@mui/material';
-import { Carousel } from 'react-responsive-carousel';
+
 import Rating from '@mui/material/Rating';
 import Layout from '../../components/Layout';
 import classes from '../../utils/classes';
