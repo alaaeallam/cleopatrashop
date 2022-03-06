@@ -13,7 +13,7 @@ import {
   CircularProgress,
   Box,
 } from '@mui/material';
-
+import { Carousel } from 'react-responsive-carousel';
 import Rating from '@mui/material/Rating';
 import Layout from '../../components/Layout';
 import classes from '../../utils/classes';
@@ -100,7 +100,7 @@ export default function ProductScreen(props) {
       </Box>
       <Grid container spacing={1}>
         <Grid item md={6} xs={12}>
-        
+          <Carousel>
           <Image
             src={product.image}
             alt={product.name}
@@ -108,7 +108,7 @@ export default function ProductScreen(props) {
             height={640}
             layout="responsive"
           ></Image>
-      
+          </Carousel>
         </Grid>
         <Grid item md={3} xs={12}>
           <List>
