@@ -38,8 +38,7 @@ function PlaceOrder() {
   const itemsPrice = round2(
     cartItems.reduce((a, c) => a + c.price * c.quantity, 0)
   );
-  const shippingPrice = itemsPrice > 1000 ? 0 : 30;
-  const taxPrice = round2(itemsPrice * 0.15);
+  const shippingPrice = itemsPrice > 999 ? 0 : 30;
   const totalPrice = round2(itemsPrice + shippingPrice);
   useEffect(() => {
     if (!paymentMethod) {
@@ -63,7 +62,6 @@ function PlaceOrder() {
           paymentMethod,
           itemsPrice,
           shippingPrice,
-          taxPrice,
           totalPrice,
         },
         {
@@ -188,6 +186,7 @@ function PlaceOrder() {
               <Grid container>
                 <Grid item xs={6}>
                   <Typography>Delivery:</Typography>
+                
                 </Grid>
                 <Grid item xs={6}>
                   <Typography align="right">{shippingPrice}EGP</Typography>

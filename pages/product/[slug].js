@@ -9,7 +9,7 @@ import {
   Typography,
   Card,
   Button,
-  TextField,
+  TextField, 
   CircularProgress,
   Box,
 } from '@mui/material';
@@ -32,7 +32,6 @@ export default function ProductScreen(props) {
   const { state, dispatch } = useContext(Store);
   const { userInfo } = state;
   const { product } = props;
-
   const { enqueueSnackbar } = useSnackbar();
 
   const [reviews, setReviews] = useState([]);

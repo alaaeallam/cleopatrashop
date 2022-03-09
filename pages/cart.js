@@ -105,7 +105,7 @@ function CartScreen() {
                           ))}
                         </Select>
                       </TableCell>
-                      <TableCell align="right">LE {item.price}</TableCell>
+                      <TableCell align="right">{item.price}EGP</TableCell>
                       <TableCell align="right">
                         <Button
                           variant="contained"

@@ -79,7 +79,6 @@ function Order({ params }) {
     paymentMethod,
     orderItems,
     itemsPrice,
-    taxPrice,
     shippingPrice,
     totalPrice,
   } = order;
@@ -258,14 +257,7 @@ function Order({ params }) {
                     <Typography align="right">LE {itemsPrice}</Typography>
                   </Grid>
                 </Grid>
-                <Grid container>
-                  <Grid item xs={6}>
-                    <Typography>Tax:</Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography align="right">EGP{taxPrice}</Typography>
-                  </Grid>
-                </Grid>
+              
                 <Grid container>
                   <Grid item xs={6}>
                     <Typography>Shipping:</Typography>

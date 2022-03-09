@@ -29,13 +29,15 @@ export default function ProductItem({ product, addToCartHandler }) {
       </NextLink>
       <CardActions>
         <Typography>EGP{product.price}</Typography>
-        <Button
+        {product.countInStock > 0 ?  <Button
           size="small"
           color="primary"
           onClick={() => addToCartHandler(product)}
         >
+          
           Add to cart
-        </Button>
+        </Button> : <Typography>Out Of Stock</Typography>}
+       
       </CardActions>
     </Card>
   );
