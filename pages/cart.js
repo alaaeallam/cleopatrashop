@@ -1,4 +1,4 @@
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import {
   Grid,
   TableContainer,
@@ -16,14 +16,14 @@ import {
   List,
   ListItem,
   Box,
-} from '@mui/material';
-import React, { useContext } from 'react';
-import NextLink from 'next/link';
-import Layout from '../components/Layout';
-import { Store } from '../utils/Store';
-import Image from 'next/image';
-import axios from 'axios';
-import { useRouter } from 'next/router';
+} from "@mui/material";
+import React, { useContext } from "react";
+import NextLink from "next/link";
+import Layout from "../components/Layout";
+import { Store } from "../utils/Store";
+import Image from "next/image";
+import axios from "axios";
+import { useRouter } from "next/router";
 function CartScreen() {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
@@ -33,15 +33,15 @@ function CartScreen() {
   const updateCartHanlder = async (item, quantity) => {
     const { data } = await axios.get(`/api/products/${item._id}`);
     if (data.countInStock < quantity) {
-      window.alert('Sorry Product is out of stock');
+      window.alert("Sorry Product is out of stock");
     }
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
+    dispatch({ type: "CART_ADD_ITEM", payload: { ...item, quantity } });
   };
   const removeItemHandler = (item) => {
-    dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
+    dispatch({ type: "CART_REMOVE_ITEM", payload: item });
   };
   const checkouthandler = () => {
-    router.push('/shipping');
+    router.push("/shipping");
   };
   return (
     <Layout title="Shpping Cart">
@@ -50,7 +50,7 @@ function CartScreen() {
       </Typography>
       {cartItems.length === 0 ? (
         <Box>
-          Cart is empty.{' '}
+          Cart is empty.{" "}
           <NextLink href="/" passHref>
             <Link>Go shopping</Link>
           </NextLink>
@@ -126,9 +126,9 @@ function CartScreen() {
               <List>
                 <ListItem>
                   <Typography variant="h2">
-                    Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
-                    {'  '}
-                    items): EGP{' '}
+                    Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{" "}
+                    {"  "}
+                    items): EGP{" "}
                     {cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}
                   </Typography>
                 </ListItem>
